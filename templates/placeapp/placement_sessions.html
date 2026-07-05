@@ -1,0 +1,6 @@
+<h2>Available Placement Sessions</h2>
+<ul>
+    {% for session in sessions %}
+        <li><a href="{% url 'job_openings' session.id %}">{{ session.company.name }} - {{ session.start_date }} to {{ session.end_date }}</a></li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,18 @@
+{% extends 'placeapp/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Placement Session Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ placement_session.company.name }}</h5>
+            <p class="card-text"><strong>Date:</strong> {{ placement_session.date }}</p>
+            <p class="card-text"><strong>Location:</strong> {{ placement_session.location }}</p>
+            <p class="card-text"><strong>Available Positions:</strong> {{ placement_session.available_positions }}</p>
+            <p class="card-text"><strong>Eligibility Criteria:</strong> {{ placement_session.eligibility_criteria }}</p>
+            <!-- Add any other placement session-specific data here -->
+            <a href="{% url 'placement_session_list' %}" class="btn btn-secondary">Back to Placement Sessions</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'placeapp/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Student List</h2>
+    <div class="row">
+        {% for student in students %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <!-- Profile Picture -->
+                    <img src="{{ student.user.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail" width="150">
+                    <h5 class="card-title mt-3">{{ student.user.first_name }} {{ student.user.name }}</h5>
+
+                    <p class="card-text"><strong>Q-</strong> {{ student.branch }}</p>
+                    <!-- Add any other fields you want to display -->
+                    <a href="{% url 'student_profile' student.id %}" class="btn btn-primary">View Profile</a>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

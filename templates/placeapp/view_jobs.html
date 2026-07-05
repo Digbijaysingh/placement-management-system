@@ -1,0 +1,71 @@
+{% extends 'placeapp/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title">{{ session.session_name }}</h2>
+            <h5 class="card-subtitle mb-2 text-muted">Company: {{ session.company.name }}</h5>
+            <p class="card-text">
+                <strong>Date:</strong> {{ session.date|date:"F j, Y" }} <br>
+                <strong>Location:</strong> {{ session.location }}
+            </p>
+        </div>
+    </div>
+
+    <h3 class="mb-4">Available Job Openings</h3>
+    <div class="list-group">
+        {% for job in job_openings %}
+        <div class="list-group-item list-group-item-action flex-column align-items-start mb-3">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ job.position }}</h5>
+                <small>{{ job.location }}</small>
+            </div>
+            <p class="mb-1"><strong>Description:</strong> {{ job.description }}</p>
+            <p class="mb-1"><strong>Qualification:</strong> {{ job.qualification }}</p>
+            <p class="mb-1"><strong>Qualification:</strong> {{ job.skills }}</p>
+            <div class="mt-3">
+                {% if user.is_authenticated %}
+                    {% if is_recruiter %}
+                        <a href="{% url 'view_applicants' job.id %}" class="btn btn-info">View Applicants</a>
+                    {% else %}
+                    <button onclick="applyForJob({{ job.id }}, '{{ job.session.session_end|date:'Y-m-d H:i:s' }}', '{% url 'apply_job' 0 %}')" class="btn btn-primary">
+                        Apply
+                    </button>
+                    
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'login' %}?next={% url 'placement_session_detail' session.id %}" class="btn btn-secondary">Login to Apply</a>
+                {% endif %}
+            </div>
+            
+        </div>
+        {% empty %}
+        <div class="alert alert-warning" role="alert">
+            No job openings available for this session.
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        function applyForJob(jobId, sessionEnd, applyJobUrl) {
+            // Convert session_end to JavaScript Date object
+            let sessionEndTime = new Date(sessionEnd);
+            let currentTime = new Date();
+    
+            // Check if the job session has expired
+            if (currentTime > sessionEndTime) {
+                alert("This job session has expired. You cannot apply.");
+                return;
+            }
+    
+            // Replace '0' in applyJobUrl with the actual jobId
+            let finalApplyUrl = applyJobUrl.replace('/0/', '/' + jobId + '/');
+            
+            // Redirect to the final apply job URL
+            window.location.href = finalApplyUrl;
+        }
+    </script>
+    
+    
+</div>
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends 'placeapp/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Job Applications</h2>
+
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {% if applications %}
+        <div class="row">
+            {% for application in applications %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm p-4">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-user"></i> {{ application.name }}</h5>
+                            <p class="card-text"><strong>Email:</strong> {{ application.email }}</p>
+                            <p class="card-text"><strong>Phone:</strong> {{ application.phone }}</p>
+                            <p class="card-text"><strong>Cover Letter:</strong> {{ application.cover_letter }}</p>
+
+                            <!-- Download Resume -->
+                            <a href="{{ application.resume.url }}" class="btn btn-outline-primary">
+                                <i class="fas fa-download"></i> Resume
+                            </a>
+
+                            <!-- Form for Shortlisting -->
+                            {% if application.status == 'pending' %}
+                                <form action="{% url 'update_application_status' application.id 'shortlisted' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-success mt-2">
+                                        Mark as Shortlisted
+                                    </button>
+                                </form>
+                            {% endif %}
+
+                            <!-- Form for Rejecting -->
+                            {% if application.status == 'pending' %}
+                                <form action="{% url 'update_application_status' application.id 'rejected' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger mt-2">
+                                        Mark as Rejected
+                                    </button>
+                                </form>
+                            {% endif %}
+
+                            <!-- Form for Contacted -->
+                            {% if application.status == 'shortlisted' %}
+                                <form action="{% url 'update_application_status' application.id 'contacted' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-info mt-2">
+                                        Mark as Contacted
+                                    </button>
+                                </form>
+                            {% endif %}
+
+                            <!-- Display Rejected status -->
+                            {% if application.status == 'rejected' %}
+                                <button class="btn btn-danger mt-2" disabled>Rejected</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center">
+            <h5>No applicants have applied for this job yet.</h5>
+        </div>
+    {% endif %}
+</div>
+
+<!-- CSRF Token as JavaScript Variable -->
+
+
+<!-- Animation Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    /* Job Applications Header */
+    .container h2 {
+        font-weight: bold;
+    }
+
+    /* Application Card */
+    .card {
+        border-radius: 12px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Buttons */
+    .btn {
+        transition: 0.3s;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-outline-success:hover {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-outline-info:hover {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    /* Responsive Layout */
+    @media (max-width: 768px) {
+        .card {
+            padding: 20px;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}

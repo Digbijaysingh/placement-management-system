@@ -1,0 +1,27 @@
+<!-- session_job_openings.html -->
+
+{% extends 'placeapp/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">{{ session.session_name }} - Job Openings</h2>
+    <h4>Job Openings for {{ session.company.name }}</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Job Listings</h5>
+                    <ul id="job-list">
+                        {% for job in job_openings %}
+                        <li>{{ job.position }} - {{ job.location }}</li>
+                        {% empty %}
+                        <li>No job openings yet.</li>
+                        {% endfor %}
+                    </ul>
+                    <button id="loadMoreJobs" class="btn btn-primary">Load More Jobs</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
