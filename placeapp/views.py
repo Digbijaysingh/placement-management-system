@@ -5,6 +5,20 @@ from .forms import LoginForm, StudentSignupForm, RecruiterSignupForm
 from .models import User, Student, Company, CompanyRecruiter, PlacementSession
 import logging
 from django.contrib.auth.decorators import login_required
+ # ================================
+ # Django Rest Framework API Import
+ # ================================
+from rest_framework import viewsets
+from .serializers import (
+    UserSerializer,
+    StudentSerializer,
+    CompanySerializer,
+    PlacementSessionSerializer,
+    JobOpeningSerializer,
+    JobApplicationSerializer,
+    ContactUsSerializer,
+    CompanyRegisterSerializer,
+)
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -698,3 +712,46 @@ def check_application_status(request, job_id):
     
     except JobOpening.DoesNotExist:
         return JsonResponse({'status': 404, 'message': 'Job not found.'})
+    
+# ===============================
+# Django REST Framework API Views
+# ===============================
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class StudentViewSet(viewsets.ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class CompanyViewSet(viewsets.ModelViewSet):
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+
+
+class PlacementSessionViewSet(viewsets.ModelViewSet):
+    queryset = PlacementSession.objects.all()
+    serializer_class = PlacementSessionSerializer
+
+
+class JobOpeningViewSet(viewsets.ModelViewSet):
+    queryset = JobOpening.objects.all()
+    serializer_class = JobOpeningSerializer
+
+
+class JobApplicationViewSet(viewsets.ModelViewSet):
+    queryset = JobApplication.objects.all()
+    serializer_class = JobApplicationSerializer
+
+
+class ContactUsViewSet(viewsets.ModelViewSet):
+    queryset = ContactUs.objects.all()
+    serializer_class = ContactUsSerializer
+
+
+class CompanyRegisterViewSet(viewsets.ModelViewSet):
+    queryset = CompanyRegister.objects.all()
+    serializer_class = CompanyRegisterSerializer

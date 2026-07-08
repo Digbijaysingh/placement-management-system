@@ -16,9 +16,9 @@
     <div class="container">
         <h1 class="display-4 fw-bold">Welcome to the Placement Management System</h1>
         <p class="lead mb-4">Connecting students and companies seamlessly</p>
-        <a href="{% url 'student_list' %}" class="btn btn-light btn-lg mx-2 animate__animated animate__fadeIn animate__delay-1s">View Students</a>
-        <a href="{% url 'company_list' %}" class="btn btn-light btn-lg mx-2 animate__animated animate__fadeIn animate__delay-1s">View Companies</a>
-        <a href="{% url 'placement_session_list' %}" class="btn btn-light btn-lg mx-2 animate__animated animate__fadeIn animate__delay-2s">View Placements</a>
+        <a href="{% url 'student_list_page' %}" class="btn btn-light btn-lg mx-2 animate__animated animate__fadeIn animate__delay-1s">View Students</a>
+        <a href="{% url 'company_list_page' %}" class="btn btn-light btn-lg mx-2 animate__animated animate__fadeIn animate__delay-1s">View Companies</a>
+        <a href="{% url 'placement_session_list_page' %}" class="btn btn-light btn-lg mx-2 animate__animated animate__fadeIn animate__delay-2s">View Placements</a>
     </div>
 </section>
 
@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <h5 class="card-title text-primary fw-bold">Students</h5>
                     <p class="card-text">Manage student details and monitor placement progress.</p>
-                    <a href="{% url 'student_list' %}" class="btn btn-outline-primary">Explore Students</a>
+                    <a href="{% url 'student_list_page' %}" class="btn btn-outline-primary">Explore Students</a>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
                 <div class="card-body">
                     <h5 class="card-title text-primary fw-bold">Companies</h5>
                     <p class="card-text">Browse companies participating in the placement program.</p>
-                    <a href="{% url 'company_list' %}" class="btn btn-outline-primary">Explore Companies</a>
+                    <a href="{% url 'company_list_page' %}" class="btn btn-outline-primary">Explore Companies</a>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                 <div class="card-body">
                     <h5 class="card-title text-primary fw-bold">Placements</h5>
                     <p class="card-text">Track placement sessions and student selections.</p>
-                    <a href="{% url 'placement_session_list' %}" class="btn btn-outline-primary">Explore Placements</a>
+                    <a href="{% url 'placement_session_list_page' %}" class="btn btn-outline-primary">Explore Placements</a>
                 </div>
             </div>
         </div>

@@ -1,18 +1,28 @@
-from django.urls import path
+from django.urls import path,include
+from rest_framework.routers import DefaultRouter 
 from . import views
+router = DefaultRouter()
 
-from django.urls import path
-from . import views
+router.register(r'users', views.UserViewSet)
+router.register(r'students', views.StudentViewSet)
+router.register(r'companies', views.CompanyViewSet)
+router.register(r'placement-sessions', views.PlacementSessionViewSet)
+router.register(r'job-openings', views.JobOpeningViewSet)
+router.register(r'job-applications', views.JobApplicationViewSet)
+router.register(r'contact-us', views.ContactUsViewSet)
+router.register(r'company-register', views.CompanyRegisterViewSet)
+
+
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # Homepage and student/company placement-related views
     path('', views.homepage, name='homepage'),
-    path('students/', views.student_list, name='student_list'),
+    path('students/', views.student_list, name='student_list_page'),
     path('students/<int:pk>/', views.student_detail, name='student_detail'),
-    path('companies/', views.company_list, name='company_list'),
+    path('companies/', views.company_list, name='company_list_page'),
     path('companies/<int:pk>/', views.company_detail, name='company_detail'),
-    # path('placements/', views.placement_session_list, name='placement_session_list'),
+    path('placements/', views.placement_session_list, name='placement_session_list_page'),
     path('placements/<int:pk>/', views.placement_session_detail, name='placement_session_detail'),  # Placement session detail page
     path('my-applications/', views.view_applications, name='view_applications'),
     path('check-application/<int:pk>/', views.check_application_status, name='check_application_status'),
@@ -42,4 +52,9 @@ urlpatterns = [
     path('application/<int:application_id>/toggle-shortlisted/', views.toggle_shortlisted, name='toggle_shortlisted'),
     
     
-path('application/<int:application_id>/update-status/<str:status_type>/', views.update_application_status, name='update_application_status'),]
+path('application/<int:application_id>/update-status/<str:status_type>/', views.update_application_status, name='update_application_status'),
+]
+
+urlpatterns += [
+    path('', include(router.urls)),
+]
