@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
  # Django Rest Framework API Import
  # ================================
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from .serializers import (
     UserSerializer,
     StudentSerializer,
@@ -720,38 +721,46 @@ def check_application_status(request, job_id):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+    permission_classes = [IsAuthenticated]
 
 
 class PlacementSessionViewSet(viewsets.ModelViewSet):
     queryset = PlacementSession.objects.all()
     serializer_class = PlacementSessionSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class JobOpeningViewSet(viewsets.ModelViewSet):
     queryset = JobOpening.objects.all()
     serializer_class = JobOpeningSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class JobApplicationViewSet(viewsets.ModelViewSet):
     queryset = JobApplication.objects.all()
     serializer_class = JobApplicationSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class ContactUsViewSet(viewsets.ModelViewSet):
     queryset = ContactUs.objects.all()
     serializer_class = ContactUsSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class CompanyRegisterViewSet(viewsets.ModelViewSet):
     queryset = CompanyRegister.objects.all()
     serializer_class = CompanyRegisterSerializer
+    permission_classes = [IsAuthenticated]
