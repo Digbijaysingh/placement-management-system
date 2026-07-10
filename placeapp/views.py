@@ -530,19 +530,23 @@ def view_applicants(request, job_id):
         return HttpResponseForbidden("You are not authorized to view applicants.")
 
     # Get the job and ensure it belongs to a session associated with this recruiter
+   
+    
     job = get_object_or_404(JobOpening, id=job_id)
+
+    if job.session.recruiter != recruiter:return HttpResponseForbidden(
+        "You are not authorized to view these applicants."
+    )
+
     print(job)
-    
-    # Get all applications for this job
+
     applications = JobApplication.objects.filter(job_id=job_id)
-    
 
     context = {
-        'job': job,
-        'applications': applications,
-    }
+    'job': job,
+    'applications': applications,
+}
     return render(request, 'placeapp/view_applicants.html', context)
-
 
 
 from django.views.decorators.http import require_POST
